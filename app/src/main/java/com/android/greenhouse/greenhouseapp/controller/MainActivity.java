@@ -1,25 +1,47 @@
 package com.android.greenhouse.greenhouseapp.controller;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.greenhouse.greenhouseapp.R;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    BroadcastReceiver tokenReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String token = intent.getStringExtra("token");
+            if (token != null) {
+                //send token to your server or what you want to do
+                // Log and toast
+                Log.w("token fcm", token);
+                Toast.makeText(MainActivity.this, "Token " + token, Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +68,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Get token
-        String token = FirebaseInstanceId.getInstance().getToken();
-        // Log and toast
-        Log.w("token fcm", token);
-        Toast.makeText(MainActivity.this, "Token " + token, Toast.LENGTH_SHORT).show();
+        LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver,
+                new IntentFilter("tokenReceiver"));
+        FirebaseMessaging.getInstance().subscribeToTopic("greenhouse");
+
+
     }
 
     @Override
