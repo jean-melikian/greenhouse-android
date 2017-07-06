@@ -20,7 +20,8 @@ public interface IRFSensorEntryService {
     @POST("sensorsEntry/")
     Call<ResponseBody> create(@Body SensorEntry sensorEntry);
 
-    @GET("{path}")
-    Call<List<SensorEntry>> read(@Path(value = "path", encoded = true) String path);
+    @GET("/sensors")
+    Call<List<SensorEntry>> loadSensorsEntries();
+
 
 }

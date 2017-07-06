@@ -14,10 +14,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Session {
 
-    private static String BASE_URL = "myapi";
+    private static String BASE_URL = "http://ozoneprojects.fr:9001";
 
     private static Retrofit retrofit;
     private static Gson gson;
+
+    public Session() {
+        retrofit = getDefault();
+        gson = getGson();
+    }
 
     public static Retrofit getDefault() {
         if (retrofit == null) {
