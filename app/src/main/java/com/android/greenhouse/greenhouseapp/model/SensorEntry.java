@@ -1,7 +1,5 @@
 package com.android.greenhouse.greenhouseapp.model;
 
-import java.util.Date;
-
 /**
  * Created by antoinepelletier on 04/07/2017.
  */
@@ -13,7 +11,7 @@ public class SensorEntry {
     private int luminosity;
     private int temperature;
     private int __v;
-    private Date created_date;
+    private String created_date;
 
     /**
      * Constructor
@@ -25,7 +23,7 @@ public class SensorEntry {
      * @param __v
      * @param created_date
      */
-    public SensorEntry(String _id, int hygrometer, int luminosity, int temperature, int __v, Date created_date) {
+    public SensorEntry(String _id, int hygrometer, int luminosity, int temperature, int __v, String created_date) {
         this._id = _id;
         this.hygrometer = hygrometer;
         this.luminosity = luminosity;
@@ -74,11 +72,11 @@ public class SensorEntry {
         this.__v = __v;
     }
 
-    public Date getCreated_date() {
+    public String getCreated_date() {
         return created_date;
     }
 
-    public void setCreated_date(Date created_date) {
+    public void setCreated_date(String created_date) {
         this.created_date = created_date;
     }
 

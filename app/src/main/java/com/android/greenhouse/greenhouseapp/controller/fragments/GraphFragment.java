@@ -29,17 +29,17 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static okhttp3.internal.http.HttpDate.format;
 
 /**
  * Created by antoinepelletier on 06/07/2017.
@@ -156,8 +156,8 @@ public class GraphFragment extends Fragment {
             public void onResponse(Call<List<SensorEntry>> call, Response<List<SensorEntry>> response) {
                 // Prepare datas for draw the graph
                 for (SensorEntry sensorEntry : response.body()) {
-                    convertInTimestamp(sensorEntry.getCreated_date());
-                    barEntries.add(new BarEntry(sensorEntry.getCreated_date().getTime(), sensorEntry.getHygrometer()));
+                    convertStringToTimestamp(sensorEntry.getCreated_date());
+                    barEntries.add(new BarEntry(convertStringToTimestamp(sensorEntry.getCreated_date()), sensorEntry.getHygrometer()));
                 }
                 // Set up graph
                 setUpGraph();
@@ -178,16 +178,21 @@ public class GraphFragment extends Fragment {
             barDataset.setValues(barEntries);
             mLineBarChart.getData().notifyDataChanged();
             mLineBarChart.notifyDataSetChanged();
+
         } else {
             if (getActivity() instanceof HumidityActivity) {
                 barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.humidity_graph_entries));
+
             } else if (getActivity() instanceof HygrometerActivity) {
                 barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.hygrometer_graph_entries));
+
             } else if (getActivity() instanceof LuminosityActivity) {
                 barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.luminosity_graph_entries));
+
             } else if (getActivity() instanceof TemperatureActivity) {
                 barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.temp_graph_entries));
             }
+
             barDataset = new BarDataSet(barEntries, "Temperature Entries");
 
             barDataset.setDrawIcons(false);
@@ -204,6 +209,26 @@ public class GraphFragment extends Fragment {
 
             mLineBarChart.setData(data);
         }
+    }
+
+    /**
+     * Convert a given String into timeStampp format
+     *
+     * @param str_date (Thu Jul 06 15:59:29 GMT+02:00 2017)
+     * @return Long timestampp format (1499349569)
+     */
+    public static Long convertStringToTimestamp(String str_date) {
+
+        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        Date d;
+        try {
+            d = df.parse(str_date);
+            return d.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
