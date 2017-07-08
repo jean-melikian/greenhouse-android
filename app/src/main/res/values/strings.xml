@@ -5,4 +5,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <!-- Menu Strings item -->
+    <string name="menu_temperature">Temperature</string>
+    <string name="menu_humidity">Humidity</string>
+    <string name="menu_hydro">Hygrometer</string>
+    <string name="menu_luminosity">Luminosity</string>
+    <string name="temp_graph_entries">Temperature Entries</string>
+    <string name="humidity_graph_entries">Humidity Entries</string>
+    <string name="hygrometer_graph_entries">Hygrometer Entries</string>
+    <string name="luminosity_graph_entries">Luminosity Entries</string>
 </resources>

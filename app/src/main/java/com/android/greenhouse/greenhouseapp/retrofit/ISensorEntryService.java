@@ -1,5 +1,7 @@
 package com.android.greenhouse.greenhouseapp.retrofit;
 
+import android.util.Log;
+
 import com.android.greenhouse.greenhouseapp.model.SensorEntry;
 
 import java.util.List;
@@ -16,6 +18,10 @@ import retrofit2.Response;
 public class ISensorEntryService implements ISensorsEntryService {
 
     private IRFSensorEntryService irfSensorEntryService;
+
+    public ISensorEntryService() {
+
+    }
 
     private IRFSensorEntryService getmRfSensorEntryService() {
         if (irfSensorEntryService == null)
@@ -58,5 +64,24 @@ public class ISensorEntryService implements ISensorsEntryService {
     @Override
     public void read(IServiceResultListener<List<SensorEntry>> resultListener) {
 
+    }
+
+    @Override
+    public Call<List<SensorEntry>> loadSensorsEntries() {
+        Call<List<SensorEntry>> call = getmRfSensorEntryService().loadSensorsEntries();
+        call.enqueue(new Callback<List<SensorEntry>>() {
+            @Override
+            public void onResponse(Call<List<SensorEntry>> call, Response<List<SensorEntry>> response) {
+                for (SensorEntry sensorEntry : response.body()) {
+                    Log.i("SENSOR ENTRY : ", sensorEntry.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SensorEntry>> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+            }
+        });
+        return call;
     }
 }
