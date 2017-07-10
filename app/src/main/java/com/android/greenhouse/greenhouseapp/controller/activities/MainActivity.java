@@ -32,10 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //send token to your server or what you want to do
                 // Log and toast
                 Log.w("token fcm", token);
-                Toast.makeText(MainActivity.this, "Token " + token, Toast.LENGTH_SHORT).show();
-
             }
-
         }
     };
 
@@ -55,10 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver,
-                new IntentFilter("tokenReceiver"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver, new IntentFilter("tokenReceiver"));
         FirebaseMessaging.getInstance().subscribeToTopic("greenhouse");
-
 
     }
 

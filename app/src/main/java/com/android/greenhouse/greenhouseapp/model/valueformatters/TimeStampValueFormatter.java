@@ -25,7 +25,7 @@ public class TimeStampValueFormatter implements IAxisValueFormatter {
 
         date = new Date((long) value);
 
-        simpleDateFormat = new SimpleDateFormat("dd/MM");
+        simpleDateFormat = new SimpleDateFormat("dd:MM");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("fr-FR"));
 
         return simpleDateFormat.format(date);

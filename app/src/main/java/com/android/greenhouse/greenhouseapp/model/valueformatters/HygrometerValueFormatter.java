@@ -3,6 +3,8 @@ package com.android.greenhouse.greenhouseapp.model.valueformatters;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by antoinepelletier on 10/07/2017.
  */
@@ -19,6 +21,6 @@ public class HygrometerValueFormatter implements IAxisValueFormatter {
      */
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        return String.valueOf(value) + "hy";
+        return new DecimalFormat("##.##").format(value) + "%";
     }
 }

@@ -13,6 +13,7 @@ import com.android.greenhouse.greenhouseapp.controller.activities.HumidityActivi
 import com.android.greenhouse.greenhouseapp.controller.activities.HygrometerActivity;
 import com.android.greenhouse.greenhouseapp.controller.activities.LuminosityActivity;
 import com.android.greenhouse.greenhouseapp.controller.activities.TemperatureActivity;
+import com.android.greenhouse.greenhouseapp.model.DateHelper;
 import com.android.greenhouse.greenhouseapp.model.Entries;
 import com.android.greenhouse.greenhouseapp.model.SensorEntry;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.HumidityValueFormatter;
@@ -143,7 +144,19 @@ public class GraphFragment extends Fragment {
             public void onResponse(Call<SensorEntry> call, Response<SensorEntry> response) {
                 // Prepare datas for draw the graph
                 for (Entries entry : response.body().getEntries()) {
-                    entries.add(new Entry(convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+                    if (getActivity() instanceof HumidityActivity) {
+                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+
+                    } else if (getActivity() instanceof HygrometerActivity) {
+                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+
+                    } else if (getActivity() instanceof LuminosityActivity) {
+                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getLuminosity()));
+
+                    } else {
+                        // Temperature
+                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+                    }
                 }
                 // Set up graph
                 setUpGraph();
@@ -177,7 +190,9 @@ public class GraphFragment extends Fragment {
                 lineDataset = new LineDataSet(entries, getActivity().getResources().getString(R.string.temp_graph_entries));
             }
 
-            lineDataset.setDrawIcons(false);
+            lineDataset.setDrawIcons(true);
+            lineDataset.setDrawValues(true);
+            lineDataset.setDrawCircles(true);
 
             lineDataset.setColors(ColorTemplate.MATERIAL_COLORS);
 
@@ -185,32 +200,9 @@ public class GraphFragment extends Fragment {
             dataSets.add(lineDataset);
 
             LineData data = new LineData(dataSets);
-            data.setValueTextSize(10f);
-            data.setValueTypeface(Typeface.DEFAULT);
 
             mLineBarChart.setData(data);
         }
-    }
-
-    /**
-     * Convert a given String into timeStampp format
-     *
-     * @param str_date (2017-07-08T23:00:38.169Z)
-     * @return Long timestampp format ()
-     */
-    public static long convertStringToTimestamp(String str_date) {
-
-        Date date;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
-
-        try {
-            date = simpleDateFormat.parse(str_date);
-            return date.getTime();
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return 0l;
     }
 
 }
