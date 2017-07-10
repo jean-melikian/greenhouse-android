@@ -13,28 +13,30 @@ import com.android.greenhouse.greenhouseapp.controller.activities.HumidityActivi
 import com.android.greenhouse.greenhouseapp.controller.activities.HygrometerActivity;
 import com.android.greenhouse.greenhouseapp.controller.activities.LuminosityActivity;
 import com.android.greenhouse.greenhouseapp.controller.activities.TemperatureActivity;
+import com.android.greenhouse.greenhouseapp.model.Entries;
 import com.android.greenhouse.greenhouseapp.model.SensorEntry;
-import com.android.greenhouse.greenhouseapp.model.TemperatureValueFormatter;
-import com.android.greenhouse.greenhouseapp.model.TimeStampValueFormatter;
+import com.android.greenhouse.greenhouseapp.model.valueformatters.HumidityValueFormatter;
+import com.android.greenhouse.greenhouseapp.model.valueformatters.HygrometerValueFormatter;
+import com.android.greenhouse.greenhouseapp.model.valueformatters.LuminosityValueFormatter;
+import com.android.greenhouse.greenhouseapp.model.valueformatters.TemperatureValueFormatter;
+import com.android.greenhouse.greenhouseapp.model.valueformatters.TimeStampValueFormatter;
 import com.android.greenhouse.greenhouseapp.retrofit.IRFSensorEntryService;
 import com.android.greenhouse.greenhouseapp.retrofit.Session;
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -47,15 +49,15 @@ import retrofit2.Response;
 
 public class GraphFragment extends Fragment {
 
-    private BarChart mLineBarChart;
-    private ArrayList<BarEntry> barEntries;
-    private BarDataSet barDataset;
+    private LineChart mLineBarChart;
+    private ArrayList<Entry> entries;
+    private LineDataSet lineDataset;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_graph, container, false);
-        mLineBarChart = (BarChart) view.findViewById(R.id.barChart);
+        mLineBarChart = (LineChart) view.findViewById(R.id.barChart);
         initDatasChart();
         return view;
     }
@@ -68,11 +70,22 @@ public class GraphFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTypeface(Typeface.DEFAULT);
         xAxis.setDrawGridLines(true);
-        xAxis.setLabelCount(7);
         xAxis.setValueFormatter(xAxisFormatter);
 
+        IAxisValueFormatter yAxisFormatter;
 
-        IAxisValueFormatter yAxisFormatter = new TemperatureValueFormatter();
+        if (getContext() instanceof TemperatureActivity) {
+            yAxisFormatter = new TemperatureValueFormatter();
+
+        } else if (getContext() instanceof HumidityActivity) {
+            yAxisFormatter = new HumidityValueFormatter();
+
+        } else if (getContext() instanceof HygrometerActivity) {
+            yAxisFormatter = new HygrometerValueFormatter();
+
+        } else {
+            yAxisFormatter = new LuminosityValueFormatter();
+        }
 
         YAxis yAxisLeft = mLineBarChart.getAxisLeft();
         yAxisLeft.setTypeface(Typeface.DEFAULT);
@@ -82,6 +95,23 @@ public class GraphFragment extends Fragment {
 
         YAxis yAxisRight = mLineBarChart.getAxisRight();
         yAxisRight.setEnabled(false);
+
+        // no description text
+        mLineBarChart.getDescription().setEnabled(false);
+
+        // enable touch gestures
+        mLineBarChart.setTouchEnabled(true);
+
+        // enable scaling and dragging
+        mLineBarChart.setDragEnabled(true);
+        mLineBarChart.setScaleEnabled(true);
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        mLineBarChart.setPinchZoom(true);
+
+        mLineBarChart.animateX(2500);
+
+        launchService();
 
         Legend l = mLineBarChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -93,71 +123,27 @@ public class GraphFragment extends Fragment {
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
 
-        mLineBarChart.setMaxVisibleValueCount(60);
-        mLineBarChart.setDrawValueAboveBar(false);
-        mLineBarChart.animateXY(3000, 3000);
-
-        testService();
+        // mLineBarChart.invalidate();
 
     }
 
-    /*private void setData() {
+    private void launchService() {
 
-        // Set values of the graph
-        barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(715478400, 37.5f));
-        barEntries.add(new BarEntry(683856000, 18.5f));
-        barEntries.add(new BarEntry(777081600, 10f));
-        barEntries.add(new BarEntry(1057017600, 22f));
-        barEntries.add(new BarEntry(1499297059, 40.5f));
-
-        if (mLineBarChart.getData() != null &&
-                mLineBarChart.getData().getDataSetCount() > 0) {
-            barDataset = (BarDataSet) mLineBarChart.getData().getDataSetByIndex(0);
-            barDataset.setValues(barEntries);
-            mLineBarChart.getData().notifyDataChanged();
-            mLineBarChart.notifyDataSetChanged();
-        } else {
-            barDataset = new BarDataSet(barEntries, "Temperature Entries");
-
-            barDataset.setDrawIcons(false);
-
-            barDataset.setColors(ColorTemplate.MATERIAL_COLORS);
-
-            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            dataSets.add(barDataset);
-
-            BarData data = new BarData(dataSets);
-            data.setValueTextSize(10f);
-            data.setValueTypeface(Typeface.DEFAULT);
-            data.setBarWidth(0.9f);
-
-            mLineBarChart.setData(data);
-        }
-    }*/
-
-    public void convertInTimestamp(Date date) {
-        Log.i("test", String.valueOf(date.getTime()));
-    }
-
-    private void testService() {
-
-        barEntries = new ArrayList<>();
+        entries = new ArrayList<>();
 
         // Service setup
         IRFSensorEntryService service = Session.getDefault().create(IRFSensorEntryService.class);
 
         // Prepare the HTTP request
-        Call<List<SensorEntry>> call = service.loadSensorsEntries();
+        Call<SensorEntry> call = service.loadSensorsEntries();
 
         // Asynchronously execute HTTP request
-        call.enqueue(new Callback<List<SensorEntry>>() {
+        call.enqueue(new Callback<SensorEntry>() {
             @Override
-            public void onResponse(Call<List<SensorEntry>> call, Response<List<SensorEntry>> response) {
+            public void onResponse(Call<SensorEntry> call, Response<SensorEntry> response) {
                 // Prepare datas for draw the graph
-                for (SensorEntry sensorEntry : response.body()) {
-                    convertStringToTimestamp(sensorEntry.getCreated_date());
-                    barEntries.add(new BarEntry(convertStringToTimestamp(sensorEntry.getCreated_date()), sensorEntry.getHygrometer()));
+                for (Entries entry : response.body().getEntries()) {
+                    entries.add(new Entry(convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
                 }
                 // Set up graph
                 setUpGraph();
@@ -165,47 +151,42 @@ public class GraphFragment extends Fragment {
 
 
             @Override
-            public void onFailure(Call<List<SensorEntry>> call, Throwable t) {
-                Log.i("On Failure ", "FAILED");
+            public void onFailure(Call<SensorEntry> call, Throwable t) {
+                Log.i("On Failure", "FAILED");
             }
         });
     }
 
     private void setUpGraph() {
-        if (mLineBarChart.getData() != null &&
-                mLineBarChart.getData().getDataSetCount() > 0) {
-            barDataset = (BarDataSet) mLineBarChart.getData().getDataSetByIndex(0);
-            barDataset.setValues(barEntries);
+        if (mLineBarChart.getData() != null && mLineBarChart.getData().getDataSetCount() > 0) {
+            lineDataset.setValues(entries);
             mLineBarChart.getData().notifyDataChanged();
             mLineBarChart.notifyDataSetChanged();
 
         } else {
             if (getActivity() instanceof HumidityActivity) {
-                barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.humidity_graph_entries));
+                lineDataset = new LineDataSet(entries, getActivity().getResources().getString(R.string.humidity_graph_entries));
 
             } else if (getActivity() instanceof HygrometerActivity) {
-                barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.hygrometer_graph_entries));
+                lineDataset = new LineDataSet(entries, getActivity().getResources().getString(R.string.hygrometer_graph_entries));
 
             } else if (getActivity() instanceof LuminosityActivity) {
-                barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.luminosity_graph_entries));
+                lineDataset = new LineDataSet(entries, getActivity().getResources().getString(R.string.luminosity_graph_entries));
 
             } else if (getActivity() instanceof TemperatureActivity) {
-                barDataset = new BarDataSet(barEntries, getActivity().getResources().getString(R.string.temp_graph_entries));
+                lineDataset = new LineDataSet(entries, getActivity().getResources().getString(R.string.temp_graph_entries));
             }
 
-            barDataset = new BarDataSet(barEntries, "Temperature Entries");
+            lineDataset.setDrawIcons(false);
 
-            barDataset.setDrawIcons(false);
+            lineDataset.setColors(ColorTemplate.MATERIAL_COLORS);
 
-            barDataset.setColors(ColorTemplate.MATERIAL_COLORS);
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(lineDataset);
 
-            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            dataSets.add(barDataset);
-
-            BarData data = new BarData(dataSets);
+            LineData data = new LineData(dataSets);
             data.setValueTextSize(10f);
             data.setValueTypeface(Typeface.DEFAULT);
-            data.setBarWidth(0.9f);
 
             mLineBarChart.setData(data);
         }
@@ -214,21 +195,22 @@ public class GraphFragment extends Fragment {
     /**
      * Convert a given String into timeStampp format
      *
-     * @param str_date (Thu Jul 06 15:59:29 GMT+02:00 2017)
-     * @return Long timestampp format (1499349569)
+     * @param str_date (2017-07-08T23:00:38.169Z)
+     * @return Long timestampp format ()
      */
-    public static Long convertStringToTimestamp(String str_date) {
+    public static long convertStringToTimestamp(String str_date) {
 
-        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        Date d;
+        Date date;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+
         try {
-            d = df.parse(str_date);
-            return d.getTime();
+            date = simpleDateFormat.parse(str_date);
+            return date.getTime();
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0l;
     }
 
 }

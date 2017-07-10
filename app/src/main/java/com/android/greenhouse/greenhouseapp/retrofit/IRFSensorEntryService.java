@@ -21,7 +21,7 @@ public interface IRFSensorEntryService {
     Call<ResponseBody> create(@Body SensorEntry sensorEntry);
 
     @GET("/sensors")
-    Call<List<SensorEntry>> loadSensorsEntries();
+    Call<SensorEntry> loadSensorsEntries();
 
 
 }

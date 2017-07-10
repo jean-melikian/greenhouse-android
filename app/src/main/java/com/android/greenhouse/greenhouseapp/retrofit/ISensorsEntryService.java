@@ -16,5 +16,5 @@ public interface ISensorsEntryService {
 
     void read(IServiceResultListener<List<SensorEntry>> resultListener);
 
-    Call<List<SensorEntry>> loadSensorsEntries();
+    Call<SensorEntry> loadSensorsEntries();
 }

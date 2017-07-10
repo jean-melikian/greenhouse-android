@@ -67,21 +67,7 @@ public class ISensorEntryService implements ISensorsEntryService {
     }
 
     @Override
-    public Call<List<SensorEntry>> loadSensorsEntries() {
-        Call<List<SensorEntry>> call = getmRfSensorEntryService().loadSensorsEntries();
-        call.enqueue(new Callback<List<SensorEntry>>() {
-            @Override
-            public void onResponse(Call<List<SensorEntry>> call, Response<List<SensorEntry>> response) {
-                for (SensorEntry sensorEntry : response.body()) {
-                    Log.i("SENSOR ENTRY : ", sensorEntry.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<SensorEntry>> call, Throwable t) {
-                Log.e("onFailure", t.toString());
-            }
-        });
-        return call;
+    public Call<SensorEntry> loadSensorsEntries() {
+        return null;
     }
 }
