@@ -1,24 +1,38 @@
 package com.android.greenhouse.greenhouseapp.controller.activities;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import com.android.greenhouse.greenhouseapp.R;
+import com.android.greenhouse.greenhouseapp.util.Constants;
 
-public class TemperatureActivity extends AppCompatActivity {
+public class TemperatureActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_temperature);
-        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-        
+    public int getContentViewId() {
+        return R.layout.activity_hygrometer;
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
-        finish();
+    public void onResume() {
+        super.onResume();
+        setActionBarTitleDynamic(getResources().getString(R.string.menu_temperature));
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public String getTitleBarTitle() {
+        return getResources().getString(R.string.menu_temperature);
+    }
+
+    @Override
+    public String getHexActionbarColor() {
+        return Constants.ACTION_BAR_COLOR;
+    }
+
+    @Override
+    public int getTitleActionBarColor() {
+        return getResources().getColor(R.color.dark_gray_text);
     }
 }
