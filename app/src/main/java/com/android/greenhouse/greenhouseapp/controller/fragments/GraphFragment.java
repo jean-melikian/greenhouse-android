@@ -3,6 +3,7 @@ package com.android.greenhouse.greenhouseapp.controller.fragments;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -106,7 +106,7 @@ public class GraphFragment extends Fragment {
         // if disabled, scaling can be done on x- and y-axis separately
         mLineBarChart.setPinchZoom(true);
 
-        mLineBarChart.animateX(2500);
+        mLineBarChart.animateXY(2500, 2500);
 
         launchService();
 
@@ -119,8 +119,6 @@ public class GraphFragment extends Fragment {
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
-
-        // mLineBarChart.invalidate();
 
     }
 
@@ -192,7 +190,9 @@ public class GraphFragment extends Fragment {
             lineDataset.setDrawValues(true);
             lineDataset.setDrawCircles(true);
 
-            lineDataset.setColors(ColorTemplate.MATERIAL_COLORS);
+            int[] colorGraph = {ContextCompat.getColor(getContext(), R.color.dark_green)};
+
+            lineDataset.setColors(colorGraph);
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(lineDataset);
