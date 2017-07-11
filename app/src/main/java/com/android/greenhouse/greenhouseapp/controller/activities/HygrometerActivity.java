@@ -2,18 +2,9 @@ package com.android.greenhouse.greenhouseapp.controller.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.android.greenhouse.greenhouseapp.R;
-import com.android.greenhouse.greenhouseapp.model.SensorEntry;
-import com.android.greenhouse.greenhouseapp.retrofit.IRFSensorEntryService;
-import com.android.greenhouse.greenhouseapp.retrofit.Session;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HygrometerActivity extends AppCompatActivity {
 
@@ -32,9 +23,4 @@ public class HygrometerActivity extends AppCompatActivity {
         finish();
     }
 
-    public void prepareDatas(List<SensorEntry> sensorEntries) {
-        for (SensorEntry sensorEntry : sensorEntries) {
-
-        }
-    }
 }

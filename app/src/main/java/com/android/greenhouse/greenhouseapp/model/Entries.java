@@ -52,6 +52,23 @@ public class Entries {
         this.hygrometer = hygrometer;
     }
 
+    /**
+     * Constructor
+     *
+     * @param created_date
+     * @param _id
+     * @param __v
+     * @param luminosity
+     * @param hygrometer
+     */
+    public Entries(String created_date, String _id, String __v, int luminosity, int hygrometer) {
+        this.created_date = created_date;
+        this._id = _id;
+        this.__v = __v;
+        this.luminosity = luminosity;
+        this.hygrometer = hygrometer;
+    }
+
     @Override
     public String toString() {
         return "Entry : [created_date = " + created_date + ", _id = " + _id + ", __v = " + __v + ", luminosity = " + luminosity + ", hygrometer = " + hygrometer + "]";

@@ -8,4 +8,7 @@
     <dimen name="no_size">0dp</dimen>
 
     <dimen name="txtsize_header_main">20sp</dimen>
+
+    <dimen name="height_chart">500dp</dimen>
+    <dimen name="padding_regular">12dp</dimen>
 </resources>

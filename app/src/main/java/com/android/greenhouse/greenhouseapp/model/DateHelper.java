@@ -10,6 +10,7 @@ import java.util.Locale;
  */
 
 public class DateHelper {
+
     /**
      * Convert a given String into timeStampp format
      *
@@ -29,5 +30,15 @@ public class DateHelper {
             e.printStackTrace();
         }
         return 0l;
+    }
+
+    /**
+     * Function which test if a given time Stamp reprensents a day before the current time
+     *
+     * @param currentTimeStamp
+     * @return
+     */
+    public static Boolean isOneDayBefore(long currentTimeStamp) {
+        return (currentTimeStamp < (new Date().getTime() - 86400000)) ? true : false;
     }
 }

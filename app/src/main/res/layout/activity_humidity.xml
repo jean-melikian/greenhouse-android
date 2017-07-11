@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="@dimen/padding_regular"
     tools:context="com.android.greenhouse.greenhouseapp.controller.activities.HygrometerActivity">
 
     <fragment
         android:id="@+id/chartFragment"
         class="com.android.greenhouse.greenhouseapp.controller.fragments.GraphFragment"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="@dimen/height_chart"
         tools:layout="@layout/fragment_graph">
 
     </fragment>

@@ -34,11 +34,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -144,18 +140,20 @@ public class GraphFragment extends Fragment {
             public void onResponse(Call<SensorEntry> call, Response<SensorEntry> response) {
                 // Prepare datas for draw the graph
                 for (Entries entry : response.body().getEntries()) {
-                    if (getActivity() instanceof HumidityActivity) {
-                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+                    if (!DateHelper.isOneDayBefore(DateHelper.convertStringToTimestamp(entry.getCreated_date()))) {
+                        if (getActivity() instanceof HumidityActivity) {
+                            entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
 
-                    } else if (getActivity() instanceof HygrometerActivity) {
-                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+                        } else if (getActivity() instanceof HygrometerActivity) {
+                            entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
 
-                    } else if (getActivity() instanceof LuminosityActivity) {
-                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getLuminosity()));
+                        } else if (getActivity() instanceof LuminosityActivity) {
+                            entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getLuminosity()));
 
-                    } else {
-                        // Temperature
-                        entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+                        } else {
+                            // Temperature
+                            entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+                        }
                     }
                 }
                 // Set up graph
