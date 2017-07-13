@@ -17,6 +17,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        def devEndPoint = '"http://dev.greenduino.info/"';
+        def prodEndPoint = '"http://greenduino.info/"';
+        def devTopic = '"greenhouse-dev"';
+        def prodTopic = '"greenhouse-prod"';
+        dev {
+            buildConfigField "String", "GREENDUINO_REMOTE_ENDPOINT", devEndPoint
+            buildConfigField "String", "GREENDUINO_TOPIC", devTopic
+        }
+        prod {
+            buildConfigField "String", "GREENDUINO_REMOTE_ENDPOINT", prodEndPoint
+            buildConfigField "String", "GREENDUINO_TOPIC", prodTopic
+        }
+    }
 }
 repositories {
     maven { url "https://jitpack.io" }

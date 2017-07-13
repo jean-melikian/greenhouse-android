@@ -5,18 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.android.greenhouse.greenhouseapp.BuildConfig;
 import com.android.greenhouse.greenhouseapp.R;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -42,7 +34,7 @@ public class MainActivity extends DrawerBaseActivity {
         super.addContentView(R.layout.activity_main);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver, new IntentFilter("tokenReceiver"));
-        FirebaseMessaging.getInstance().subscribeToTopic("greenhouse");
+        FirebaseMessaging.getInstance().subscribeToTopic(BuildConfig.GREENDUINO_TOPIC);
 
     }
 
