@@ -1,37 +1,39 @@
 package com.android.greenhouse.greenhouseapp.retrofit;
 
+import com.android.greenhouse.greenhouseapp.retrofit.errors.ServiceException;
+
 /**
  * Created by antoinepelletier on 04/07/2017.
  */
 
 public class ServiceResult<T> {
 
-    T mData;
-    ServiceException mError;
-
-    public T getmData() {
-        return mData;
-    }
-
-    public void setmData(T mData) {
-        this.mData = mData;
-    }
-
-    public ServiceException getmError() {
-        return mError;
-    }
-
-    public void setmError(ServiceException mError) {
-        this.mError = mError;
-    }
+    T data;
+    ServiceException error;
 
     public ServiceResult() {
 
     }
 
-    public ServiceResult(T mData, ServiceException mError) {
-        this.mData = mData;
-        this.mError = mError;
+    public ServiceResult(T data, ServiceException error) {
+        this.data = data;
+        this.error = error;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public ServiceException getError() {
+        return error;
+    }
+
+    public void setError(ServiceException error) {
+        this.error = error;
     }
 
 }
