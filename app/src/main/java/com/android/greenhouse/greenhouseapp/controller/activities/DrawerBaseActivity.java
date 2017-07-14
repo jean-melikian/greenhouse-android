@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,10 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 	private Fragment sensorGraphFragment;
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
+	private HumidityFragment humidityFragment;
+	private HygrometerFragment hygrometerFragment;
+	private LuminosityFragment luminosityFragment;
+	private TemperatureFragment temperatureFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 		setContentView(R.layout.activity_base);
 
 		fragmentManager = getSupportFragmentManager();
-		setSensorFragment(new HygrometerFragment());
+		setSensorFragment(SensorGraph.Hygrometer);
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -110,28 +115,20 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 
 		Intent intent;
 		if (id == R.id.nav_temperature) {
-			// Launch Temperature Activity
-//            intent = new Intent(this, TemperatureActivity.class);
-//            startActivity(intent);
-			setSensorFragment(new TemperatureFragment());
+			// Load Temperature Fragment
+			setSensorFragment(SensorGraph.Temperature);
 
 		} else if (id == R.id.nav_humidity) {
-			// Launch Humidity Activity
-//            intent = new Intent(this, HumidityActivity.class);
-//            startActivity(intent);
-			setSensorFragment(new HumidityFragment());
+			// Load Humidity Fragment
+			setSensorFragment(SensorGraph.Humidity);
 
 		} else if (id == R.id.nav_hygrometer) {
-			// Launch Hidro Activity
-//            intent = new Intent(this, HygrometerActivity.class);
-//            startActivity(intent);
-			setSensorFragment(new HygrometerFragment());
+			// Load Hidro Fragment
+			setSensorFragment(SensorGraph.Hygrometer);
 
 		} else if (id == R.id.nav_luminosity) {
-			// Launch Luminosity Activity
-//            intent = new Intent(this, LuminosityActivity.class);
-//            startActivity(intent);
-			setSensorFragment(new LuminosityFragment());
+			// Load Luminosity Fragment
+			setSensorFragment(SensorGraph.Luminosity);
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -139,10 +136,66 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 		return true;
 	}
 
-	private void setSensorFragment(Fragment fragment) {
-		sensorGraphFragment = fragment;
+	private void setSensorFragment(SensorGraph sensor) {
+
+		boolean shouldAddFragment = false;
+		if (sensorGraphFragment == null) {
+			shouldAddFragment = true;
+		}
+		Log.d("sensorfragment", "first debug");
+
+		switch (sensor) {
+			case Humidity:
+				if (humidityFragment == null) {
+					humidityFragment = new HumidityFragment();
+				}
+				if (sensorGraphFragment == humidityFragment) {
+					return;
+				}
+				Log.d("sensorfragment", sensor.name);
+				sensorGraphFragment = humidityFragment;
+
+				break;
+			case Hygrometer:
+				if (hygrometerFragment == null) {
+					hygrometerFragment = new HygrometerFragment();
+				}
+				if (sensorGraphFragment == hygrometerFragment) {
+					return;
+				}
+				Log.d("sensorfragment", sensor.name);
+				sensorGraphFragment = hygrometerFragment;
+
+				break;
+			case Luminosity:
+				if (luminosityFragment == null) {
+					luminosityFragment = new LuminosityFragment();
+				}
+				if (sensorGraphFragment == luminosityFragment) {
+					return;
+				}
+				Log.d("sensorfragment", sensor.name);
+				sensorGraphFragment = luminosityFragment;
+
+				break;
+			case Temperature:
+				if (temperatureFragment == null) {
+					temperatureFragment = new TemperatureFragment();
+				}
+				if (sensorGraphFragment == temperatureFragment) {
+					return;
+				}
+				Log.d("sensorfragment", sensor.name);
+				sensorGraphFragment = temperatureFragment;
+				break;
+			default:
+				Log.d("sensorfragment", sensor.name);
+				break;
+		}
+
 		fragmentTransaction = fragmentManager.beginTransaction();
-		if (fragment == null) {
+
+		if (shouldAddFragment) {
 			fragmentTransaction.add(MAIN_CONTAINER_ID, sensorGraphFragment, sensorGraphFragment.getTag());
 		} else {
 			fragmentTransaction.replace(MAIN_CONTAINER_ID, sensorGraphFragment, sensorGraphFragment.getTag());
@@ -154,9 +207,27 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 		return sensorGraphFragment;
 	}
 
-
 	public void setTitleBarTitle(String title) {
 		txt_action_title.setText(title);
+	}
+
+
+	private enum SensorGraph {
+		Humidity("Humidity"),
+		Hygrometer("Hygrometer"),
+		Luminosity("Luminosity"),
+		Temperature("Temperature");
+
+		private String name = "";
+
+		SensorGraph(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return name + "Fragment";
+		}
 	}
 
 }
