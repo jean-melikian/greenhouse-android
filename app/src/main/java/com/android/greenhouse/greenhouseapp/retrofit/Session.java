@@ -1,5 +1,6 @@
 package com.android.greenhouse.greenhouseapp.retrofit;
 
+import com.android.greenhouse.greenhouseapp.BuildConfig;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -14,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Session {
 
-    private static String BASE_URL = "http://ozoneprojects.fr:9001";
+    private static String BASE_URL = BuildConfig.GREENDUINO_REMOTE_ENDPOINT;
 
     private static Retrofit retrofit;
     private static Gson gson;

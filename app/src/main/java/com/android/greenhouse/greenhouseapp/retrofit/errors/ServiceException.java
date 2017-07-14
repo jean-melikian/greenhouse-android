@@ -1,4 +1,4 @@
-package com.android.greenhouse.greenhouseapp.retrofit;
+package com.android.greenhouse.greenhouseapp.retrofit.errors;
 
 /**
  * Created by antoinepelletier on 04/07/2017.
@@ -58,6 +58,31 @@ public class ServiceException extends Exception {
         setCode(mCode);
     }
 
+	public static ServiceExceptionType getTypeForCode(int code) {
+		switch (code) {
+			case 400:
+				return ServiceExceptionType.BAD_REQUEST;
+			case 401:
+				return ServiceExceptionType.UNAUTHORIZED;
+			case 403:
+				return ServiceExceptionType.FORBIDDEN;
+			case 404:
+				return ServiceExceptionType.NOT_FOUND;
+			case 405:
+				return ServiceExceptionType.METHOD_NOT_ALLOWED;
+			case 409:
+				return ServiceExceptionType.CONFLICT;
+			case 410:
+				return ServiceExceptionType.GONE;
+			case 500:
+				return ServiceExceptionType.SERVER_ERROR;
+			case 501:
+				return ServiceExceptionType.NOT_IMPLEMENTED;
+			default:
+				return ServiceExceptionType.UNKNOWN;
+		}
+	}
+
     public int getCode() {
         return mCode;
     }
@@ -82,31 +107,6 @@ public class ServiceException extends Exception {
 
     public String getOriginalMessage() {
         return super.getMessage();
-    }
-
-    public static ServiceExceptionType getTypeForCode(int code) {
-        switch (code) {
-            case 400:
-                return ServiceExceptionType.BAD_REQUEST;
-            case 401:
-                return ServiceExceptionType.UNAUTHORIZED;
-            case 403:
-                return ServiceExceptionType.FORBIDDEN;
-            case 404:
-                return ServiceExceptionType.NOT_FOUND;
-            case 405:
-                return ServiceExceptionType.METHOD_NOT_ALLOWED;
-            case 409:
-                return ServiceExceptionType.CONFLICT;
-            case 410:
-                return ServiceExceptionType.GONE;
-            case 500:
-                return ServiceExceptionType.SERVER_ERROR;
-            case 501:
-                return ServiceExceptionType.NOT_IMPLEMENTED;
-            default:
-                return ServiceExceptionType.UNKNOWN;
-        }
     }
 }
 

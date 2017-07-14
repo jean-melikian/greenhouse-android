@@ -4,13 +4,30 @@ package com.android.greenhouse.greenhouseapp.model;
  * Created by antoinepelletier on 10/07/2017.
  */
 
-public class Entries {
+public class Sensors {
 
     private String created_date;
     private String _id;
     private String __v;
-    private int luminosity;
-    private int hygrometer;
+    private float luminosity;
+    private float hygrometer;
+
+    /**
+     * Constructor
+     *
+     * @param created_date
+     * @param _id
+     * @param __v
+     * @param luminosity
+     * @param hygrometer
+     */
+    public Sensors(String created_date, String _id, String __v, float luminosity, float hygrometer) {
+        this.created_date = created_date;
+        this._id = _id;
+        this.__v = __v;
+        this.luminosity = luminosity;
+        this.hygrometer = hygrometer;
+    }
 
     public String getCreated_date() {
         return created_date;
@@ -36,7 +53,7 @@ public class Entries {
         this.__v = __v;
     }
 
-    public int getLuminosity() {
+    public float getLuminosity() {
         return luminosity;
     }
 
@@ -44,28 +61,11 @@ public class Entries {
         this.luminosity = luminosity;
     }
 
-    public int getHygrometer() {
+    public float getHygrometer() {
         return hygrometer;
     }
 
     public void setHygrometer(int hygrometer) {
-        this.hygrometer = hygrometer;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param created_date
-     * @param _id
-     * @param __v
-     * @param luminosity
-     * @param hygrometer
-     */
-    public Entries(String created_date, String _id, String __v, int luminosity, int hygrometer) {
-        this.created_date = created_date;
-        this._id = _id;
-        this.__v = __v;
-        this.luminosity = luminosity;
         this.hygrometer = hygrometer;
     }
 

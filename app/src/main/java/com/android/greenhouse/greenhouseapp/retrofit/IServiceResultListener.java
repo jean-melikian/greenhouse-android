@@ -12,5 +12,7 @@ public interface IServiceResultListener<T> {
      *
      * @param result
      */
-    void OnResult(ServiceResult<T> result);
+    void onSuccess(ServiceResult<T> result);
+
+    void onFailure(Throwable t);
 }

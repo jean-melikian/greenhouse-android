@@ -15,15 +15,16 @@ import com.android.greenhouse.greenhouseapp.controller.activities.HygrometerActi
 import com.android.greenhouse.greenhouseapp.controller.activities.LuminosityActivity;
 import com.android.greenhouse.greenhouseapp.controller.activities.TemperatureActivity;
 import com.android.greenhouse.greenhouseapp.model.DateHelper;
-import com.android.greenhouse.greenhouseapp.model.Entries;
-import com.android.greenhouse.greenhouseapp.model.SensorEntry;
+import com.android.greenhouse.greenhouseapp.model.Sensors;
+import com.android.greenhouse.greenhouseapp.model.SensorsEntries;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.HumidityValueFormatter;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.HygrometerValueFormatter;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.LuminosityValueFormatter;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.TemperatureValueFormatter;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.TimeStampValueFormatter;
-import com.android.greenhouse.greenhouseapp.retrofit.IRFSensorEntryService;
-import com.android.greenhouse.greenhouseapp.retrofit.Session;
+import com.android.greenhouse.greenhouseapp.retrofit.IServiceResultListener;
+import com.android.greenhouse.greenhouseapp.retrofit.ServiceResult;
+import com.android.greenhouse.greenhouseapp.retrofit.sensors.SensorsService;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -35,10 +36,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by antoinepelletier on 06/07/2017.
@@ -127,17 +124,15 @@ public class GraphFragment extends Fragment {
         entries = new ArrayList<>();
 
         // Service setup
-        IRFSensorEntryService service = Session.getDefault().create(IRFSensorEntryService.class);
-
-        // Prepare the HTTP request
-        Call<SensorEntry> call = service.loadSensorsEntries();
+        SensorsService sensorsService = new SensorsService();
 
         // Asynchronously execute HTTP request
-        call.enqueue(new Callback<SensorEntry>() {
+        sensorsService.getAll(new IServiceResultListener<SensorsEntries>() {
             @Override
-            public void onResponse(Call<SensorEntry> call, Response<SensorEntry> response) {
+            public void onSuccess(ServiceResult<SensorsEntries> result) {
+
                 // Prepare datas for draw the graph
-                for (Entries entry : response.body().getEntries()) {
+                for (Sensors entry : result.getData().getEntries()) {
                     if (!DateHelper.isOneDayBefore(DateHelper.convertStringToTimestamp(entry.getCreated_date()))) {
                         if (getActivity() instanceof HumidityActivity) {
                             entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
@@ -158,10 +153,10 @@ public class GraphFragment extends Fragment {
                 setUpGraph();
             }
 
-
             @Override
-            public void onFailure(Call<SensorEntry> call, Throwable t) {
+            public void onFailure(Throwable t) {
                 Log.i("On Failure", "FAILED");
+                t.printStackTrace();
             }
         });
     }

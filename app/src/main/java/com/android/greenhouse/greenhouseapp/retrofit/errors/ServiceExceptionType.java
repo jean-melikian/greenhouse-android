@@ -1,4 +1,4 @@
-package com.android.greenhouse.greenhouseapp.retrofit;
+package com.android.greenhouse.greenhouseapp.retrofit.errors;
 
 /**
  * Created by antoinepelletier on 04/07/2017.
