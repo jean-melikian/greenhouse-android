@@ -1,0 +1,13 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:padding="@dimen/padding_regular"
+             tools:context="com.android.greenhouse.greenhouseapp.controller.fragments.BaseSensorFragment">
+
+	<FrameLayout
+		android:id="@+id/graph_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+</FrameLayout>

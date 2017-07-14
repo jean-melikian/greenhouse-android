@@ -14,11 +14,11 @@ import retrofit2.http.POST;
 
 public interface IRFSensorsService {
 
-    @POST("sensorsEntry/")
-    Call<ResponseBody> create(@Body SensorsEntries sensors);
+	@POST("sensorsEntry/")
+	Call<ResponseBody> create(@Body SensorsEntries sensors);
 
-    @GET("/sensors")
-    Call<SensorsEntries> getAll();
+	@GET("/sensors")
+	Call<SensorsEntries> getAll();
 
 
 }

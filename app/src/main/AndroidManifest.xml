@@ -32,10 +32,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".controller.activities.TemperatureActivity" />
-        <activity android:name=".controller.activities.HygrometerActivity" />
-        <activity android:name=".controller.activities.LuminosityActivity" />
-        <activity android:name=".controller.activities.HumidityActivity" />
     </application>
 
 </manifest>

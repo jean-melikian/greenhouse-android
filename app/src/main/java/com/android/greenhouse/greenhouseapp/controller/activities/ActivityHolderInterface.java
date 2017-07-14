@@ -6,13 +6,13 @@ package com.android.greenhouse.greenhouseapp.controller.activities;
 
 public interface ActivityHolderInterface {
 
-    public int getContentViewId();
+	int getContentViewId();
 
-    public void initView();
+	void initView();
 
-    public String getTitleBarTitle();
+	String getTitleBarTitle();
 
-    public String getHexActionbarColor();
+	String getHexActionbarColor();
 
-    public int getTitleActionBarColor();
+	int getTitleActionBarColor();
 }

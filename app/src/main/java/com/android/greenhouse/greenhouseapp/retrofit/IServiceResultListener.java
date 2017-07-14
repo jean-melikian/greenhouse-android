@@ -7,12 +7,12 @@ package com.android.greenhouse.greenhouseapp.retrofit;
 
 public interface IServiceResultListener<T> {
 
-    /**
-     * Called when a request is finished
-     *
-     * @param result
-     */
-    void onSuccess(ServiceResult<T> result);
+	/**
+	 * Called when a request is finished
+	 *
+	 * @param result
+	 */
+	void onSuccess(ServiceResult<T> result);
 
-    void onFailure(Throwable t);
+	void onFailure(Throwable t);
 }

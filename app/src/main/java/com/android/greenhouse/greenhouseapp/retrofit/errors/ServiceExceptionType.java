@@ -5,14 +5,14 @@ package com.android.greenhouse.greenhouseapp.retrofit.errors;
  */
 
 public enum ServiceExceptionType {
-    UNKNOWN,
-    BAD_REQUEST,
-    UNAUTHORIZED,
-    FORBIDDEN,
-    NOT_FOUND,
-    METHOD_NOT_ALLOWED,
-    CONFLICT,
-    GONE,
-    SERVER_ERROR,
-    NOT_IMPLEMENTED,
+	UNKNOWN,
+	BAD_REQUEST,
+	UNAUTHORIZED,
+	FORBIDDEN,
+	NOT_FOUND,
+	METHOD_NOT_ALLOWED,
+	CONFLICT,
+	GONE,
+	SERVER_ERROR,
+	NOT_IMPLEMENTED,
 }
