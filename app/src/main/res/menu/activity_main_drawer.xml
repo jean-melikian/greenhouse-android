@@ -14,7 +14,7 @@
                 android:title="@string/menu_humidity" />
             <item
                 android:id="@+id/nav_hygrometer"
-                android:icon="@drawable/hailstorm"
+                android:icon="@drawable/watering_can"
                 android:title="@string/menu_hydro" />
             <item
                 android:id="@+id/nav_luminosity"

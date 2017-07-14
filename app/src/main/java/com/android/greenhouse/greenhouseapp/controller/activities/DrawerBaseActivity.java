@@ -44,7 +44,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_base);
+		setContentView(R.layout.activity_drawer_base);
 
 		fragmentManager = getSupportFragmentManager();
 		setSensorFragment(SensorGraph.Hygrometer);
