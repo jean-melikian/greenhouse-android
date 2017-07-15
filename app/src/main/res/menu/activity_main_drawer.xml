@@ -5,21 +5,21 @@
 
         <item android:title="Sensors">
             <item
-                android:id="@+id/nav_temperature"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="@string/menu_temperature" />
-            <item
-                android:id="@+id/nav_humidity"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="@string/menu_humidity" />
-            <item
-                android:id="@+id/nav_hygrometer"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="@string/menu_hydro" />
+                android:id="@+id/nav_soil_humidity"
+                android:icon="@drawable/watering_can"
+                android:title="@string/menu_soil_humidity"/>
             <item
                 android:id="@+id/nav_luminosity"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/luminosity"
                 android:title="@string/menu_luminosity" />
+            <item
+                android:id="@+id/nav_air_humidity"
+                android:icon="@drawable/hailstorm"
+                android:title="@string/menu_air_humidity"/>
+            <item
+                android:id="@+id/nav_temperature"
+                android:icon="@drawable/celsius"
+                android:title="@string/menu_temperature"/>
         </item>
 
     </group>

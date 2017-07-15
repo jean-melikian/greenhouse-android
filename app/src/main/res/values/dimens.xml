@@ -6,4 +6,9 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="no_size">0dp</dimen>
+
+    <dimen name="txtsize_header_main">20sp</dimen>
+
+    <dimen name="height_chart">500dp</dimen>
+    <dimen name="padding_regular">12dp</dimen>
 </resources>

@@ -1,41 +1,52 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-    defaultConfig {
-        applicationId "com.android.greenhouse.greenhouseapp"
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+	compileSdkVersion 25
+	buildToolsVersion "26.0.0"
+	defaultConfig {
+		applicationId "com.android.greenhouse.greenhouseapp"
+		minSdkVersion 15
+		targetSdkVersion 25
+		versionCode 1
+		versionName "1.0"
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+
+	productFlavors {
+		def devEndPoint = '"http://dev.greenduino.info/"';
+		def prodEndPoint = '"http://greenduino.info/"';
+		def devTopic = '"greenhouse-dev"';
+		def prodTopic = '"greenhouse-prod"';
+		dev {
+			buildConfigField "String", "GREENDUINO_REMOTE_ENDPOINT", devEndPoint
+			buildConfigField "String", "GREENDUINO_TOPIC", devTopic
+		}
+		prod {
+			buildConfigField "String", "GREENDUINO_REMOTE_ENDPOINT", prodEndPoint
+			buildConfigField "String", "GREENDUINO_TOPIC", prodTopic
+		}
+	}
 }
 repositories {
-    maven { url "https://jitpack.io" }
+	maven { url "https://jitpack.io" }
 }
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.google.firebase:firebase-messaging:11.0.2'
-    compile 'com.google.firebase:firebase-core:11.0.2'
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-    testCompile 'junit:junit:4.12'
+	compile 'com.android.support:appcompat-v7:25.3.1'
+	compile 'com.android.support:design:25.3.1'
+	compile 'com.android.support.constraint:constraint-layout:1.0.2'
+	compile 'com.google.firebase:firebase-messaging:11.0.2'
+	compile 'com.google.firebase:firebase-core:11.0.2'
+	compile 'com.squareup.retrofit2:retrofit:2.2.0'
+	compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+	compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+	compile 'com.android.support:support-v4:25.3.1'
 }
 
 
