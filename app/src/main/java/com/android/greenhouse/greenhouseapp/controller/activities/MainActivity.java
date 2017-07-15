@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.greenhouse.greenhouseapp.BuildConfig;
 import com.android.greenhouse.greenhouseapp.R;
@@ -24,6 +25,7 @@ public class MainActivity extends DrawerBaseActivity {
 				//send token to your server or what you want to do
 				// Log and toast
 				Log.w("token fcm", token);
+				Toast.makeText(context, String.format("Token: %s", token), Toast.LENGTH_SHORT).show();
 			}
 		}
 	};
