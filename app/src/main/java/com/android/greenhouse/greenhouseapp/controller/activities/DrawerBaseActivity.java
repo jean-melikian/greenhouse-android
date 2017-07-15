@@ -21,8 +21,8 @@ import android.widget.TextView;
 
 import com.android.greenhouse.greenhouseapp.R;
 import com.android.greenhouse.greenhouseapp.controller.fragments.HumidityFragment;
-import com.android.greenhouse.greenhouseapp.controller.fragments.HygrometerFragment;
 import com.android.greenhouse.greenhouseapp.controller.fragments.LuminosityFragment;
+import com.android.greenhouse.greenhouseapp.controller.fragments.SoilHumidityFragment;
 import com.android.greenhouse.greenhouseapp.controller.fragments.TemperatureFragment;
 
 public class DrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,7 +37,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
 	private HumidityFragment humidityFragment;
-	private HygrometerFragment hygrometerFragment;
+	private SoilHumidityFragment soilHumidityFragment;
 	private LuminosityFragment luminosityFragment;
 	private TemperatureFragment temperatureFragment;
 
@@ -47,7 +47,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 		setContentView(R.layout.activity_drawer_base);
 
 		fragmentManager = getSupportFragmentManager();
-		setSensorFragment(SensorGraph.Hygrometer);
+		setSensorFragment(SensorGraph.SoilHumidity);
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -118,13 +118,13 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 			// Load Temperature Fragment
 			setSensorFragment(SensorGraph.Temperature);
 
-		} else if (id == R.id.nav_humidity) {
-			// Load Humidity Fragment
-			setSensorFragment(SensorGraph.Humidity);
+		} else if (id == R.id.nav_air_humidity) {
+			// Load AirHumidity Fragment
+			setSensorFragment(SensorGraph.AirHumidity);
 
-		} else if (id == R.id.nav_hygrometer) {
+		} else if (id == R.id.nav_soil_humidity) {
 			// Load Hidro Fragment
-			setSensorFragment(SensorGraph.Hygrometer);
+			setSensorFragment(SensorGraph.SoilHumidity);
 
 		} else if (id == R.id.nav_luminosity) {
 			// Load Luminosity Fragment
@@ -145,7 +145,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 		Log.d("sensorfragment", "first debug");
 
 		switch (sensor) {
-			case Humidity:
+			case AirHumidity:
 				if (humidityFragment == null) {
 					humidityFragment = new HumidityFragment();
 				}
@@ -156,15 +156,15 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 				sensorGraphFragment = humidityFragment;
 
 				break;
-			case Hygrometer:
-				if (hygrometerFragment == null) {
-					hygrometerFragment = new HygrometerFragment();
+			case SoilHumidity:
+				if (soilHumidityFragment == null) {
+					soilHumidityFragment = new SoilHumidityFragment();
 				}
-				if (sensorGraphFragment == hygrometerFragment) {
+				if (sensorGraphFragment == soilHumidityFragment) {
 					return;
 				}
 				Log.d("sensorfragment", sensor.name);
-				sensorGraphFragment = hygrometerFragment;
+				sensorGraphFragment = soilHumidityFragment;
 
 				break;
 			case Luminosity:
@@ -213,8 +213,8 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 
 
 	private enum SensorGraph {
-		Humidity("Humidity"),
-		Hygrometer("Hygrometer"),
+		AirHumidity("AirHumidity"),
+		SoilHumidity("SoilHumidity"),
 		Luminosity("Luminosity"),
 		Temperature("Temperature");
 

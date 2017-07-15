@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
  * Created by antoinepelletier on 10/07/2017.
  */
 
-public class HygrometerValueFormatter implements IAxisValueFormatter {
+public class SoilHumidityValueFormatter implements IAxisValueFormatter {
 	/**
 	 * Called when a value from an axis is to be formatted
 	 * before being drawn. For performance reasons, avoid excessive calculations

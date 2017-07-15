@@ -19,6 +19,6 @@ public class TemperatureValueFormatter implements IAxisValueFormatter {
 	 */
 	@Override
 	public String getFormattedValue(float value, AxisBase axis) {
-		return String.valueOf(value) + "°T";
+		return String.valueOf(value) + "°C";
 	}
 }

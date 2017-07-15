@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HygrometerFragment extends BaseSensorFragment {
+public class SoilHumidityFragment extends BaseSensorFragment {
 
-	public HygrometerFragment() {
+	public SoilHumidityFragment() {
 		// Required empty public constructor
 	}
 

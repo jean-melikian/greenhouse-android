@@ -9,7 +9,5 @@ import com.android.greenhouse.greenhouseapp.retrofit.IServiceResultListener;
 
 public interface ISensorsService {
 
-	void create(SensorsEntries sensors, IServiceResultListener<String> resultListener);
-
 	void getAll(IServiceResultListener<SensorsEntries> resultListener);
 }

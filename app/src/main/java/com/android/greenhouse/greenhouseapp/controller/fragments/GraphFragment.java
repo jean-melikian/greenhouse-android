@@ -16,8 +16,8 @@ import com.android.greenhouse.greenhouseapp.model.DateHelper;
 import com.android.greenhouse.greenhouseapp.model.Sensors;
 import com.android.greenhouse.greenhouseapp.model.SensorsEntries;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.HumidityValueFormatter;
-import com.android.greenhouse.greenhouseapp.model.valueformatters.HygrometerValueFormatter;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.LuminosityValueFormatter;
+import com.android.greenhouse.greenhouseapp.model.valueformatters.SoilHumidityValueFormatter;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.TemperatureValueFormatter;
 import com.android.greenhouse.greenhouseapp.model.valueformatters.TimeStampValueFormatter;
 import com.android.greenhouse.greenhouseapp.retrofit.IServiceResultListener;
@@ -51,7 +51,7 @@ public class GraphFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_graph, container, false);
 		activity = (DrawerBaseActivity) getActivity();
-		mLineBarChart = (LineChart) view.findViewById(R.id.barChart);
+		mLineBarChart = (LineChart) view.findViewById(R.id.line_chart);
 		initDatasChart();
 		return view;
 	}
@@ -74,8 +74,8 @@ public class GraphFragment extends Fragment {
 		} else if (activity.getSensorGraphFragment() instanceof HumidityFragment) {
 			yAxisFormatter = new HumidityValueFormatter();
 
-		} else if (activity.getSensorGraphFragment() instanceof HygrometerFragment) {
-			yAxisFormatter = new HygrometerValueFormatter();
+		} else if (activity.getSensorGraphFragment() instanceof SoilHumidityFragment) {
+			yAxisFormatter = new SoilHumidityValueFormatter();
 
 		} else if (activity.getSensorGraphFragment() instanceof LuminosityFragment) {
 			yAxisFormatter = new LuminosityValueFormatter();
@@ -135,17 +135,17 @@ public class GraphFragment extends Fragment {
 				for (Sensors entry : result.getData().getEntries()) {
 					if (!DateHelper.isOneDayBefore(DateHelper.convertStringToTimestamp(entry.getCreated_date()))) {
 						if (activity.getSensorGraphFragment() instanceof HumidityFragment) {
-							entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+							entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getAirHumidity()));
 
-						} else if (activity.getSensorGraphFragment() instanceof HygrometerFragment) {
-							entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+						} else if (activity.getSensorGraphFragment() instanceof SoilHumidityFragment) {
+							entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getSoilHumidity()));
 
 						} else if (activity.getSensorGraphFragment() instanceof LuminosityFragment) {
 							entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getLuminosity()));
 
 						} else if (activity.getSensorGraphFragment() instanceof TemperatureFragment) {
 							// Temperature
-							entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getHygrometer()));
+							entries.add(new Entry(DateHelper.convertStringToTimestamp(entry.getCreated_date()), entry.getTemperature()));
 						}
 					}
 				}
@@ -169,16 +169,16 @@ public class GraphFragment extends Fragment {
 
 		} else {
 			if (activity.getSensorGraphFragment() instanceof HumidityFragment) {
-				lineDataset = new LineDataSet(entries, activity.getResources().getString(R.string.humidity_graph_entries));
+				lineDataset = new LineDataSet(entries, activity.getResources().getString(R.string.air_humidity_graph_entries));
 
-			} else if (activity.getSensorGraphFragment() instanceof HygrometerFragment) {
-				lineDataset = new LineDataSet(entries, activity.getResources().getString(R.string.hygrometer_graph_entries));
+			} else if (activity.getSensorGraphFragment() instanceof SoilHumidityFragment) {
+				lineDataset = new LineDataSet(entries, activity.getResources().getString(R.string.soil_humidity_graph_entries));
 
 			} else if (activity.getSensorGraphFragment() instanceof LuminosityFragment) {
 				lineDataset = new LineDataSet(entries, activity.getResources().getString(R.string.luminosity_graph_entries));
 
 			} else if (activity.getSensorGraphFragment() instanceof TemperatureFragment) {
-				lineDataset = new LineDataSet(entries, activity.getResources().getString(R.string.temp_graph_entries));
+				lineDataset = new LineDataSet(entries, activity.getResources().getString(R.string.temperature_graph_entries));
 			}
 
 			lineDataset.setDrawIcons(true);
