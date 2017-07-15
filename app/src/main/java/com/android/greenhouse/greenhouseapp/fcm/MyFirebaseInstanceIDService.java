@@ -13,28 +13,28 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
-    @Override
-    public void onTokenRefresh() {
-        // Get updated InstanceID token.
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.w("Refreshed token : ", refreshedToken);
+	@Override
+	public void onTokenRefresh() {
+		// Get updated InstanceID token.
+		String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+		Log.w("Refreshed token : ", refreshedToken);
 
-        Log.d("FCN TOKEN GET", "Refreshed token: " + refreshedToken);
+		Log.d("FCN TOKEN GET", "Refreshed token: " + refreshedToken);
 
-        final Intent intent = new Intent("tokenReceiver");
-        // You can also include some extra data.
-        final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
-        intent.putExtra("token",refreshedToken);
-        broadcastManager.sendBroadcast(intent);
+		final Intent intent = new Intent("tokenReceiver");
+		// You can also include some extra data.
+		final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+		intent.putExtra("token", refreshedToken);
+		broadcastManager.sendBroadcast(intent);
 
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
-        sendRegistrationToServer(refreshedToken);
-    }
+		// If you want to send messages to this application instance or
+		// manage this apps subscriptions on the server side, send the
+		// Instance ID token to your app server.
+		sendRegistrationToServer(refreshedToken);
+	}
 
-    private void sendRegistrationToServer(String token) {
+	private void sendRegistrationToServer(String token) {
 
-    }
+	}
 }

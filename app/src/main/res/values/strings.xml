@@ -1,19 +1,23 @@
 <resources>
-    <string name="app_name">Green House</string>
+	<string name="app_name">Green House</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+	<string name="action_settings">Settings</string>
 
 
-    <!-- Menu Strings item -->
-    <string name="menu_temperature">Temperature</string>
-    <string name="menu_humidity">Humidity</string>
-    <string name="menu_hydro">Hygrometer</string>
-    <string name="menu_luminosity">Luminosity</string>
-    <string name="temp_graph_entries">Temperature Entries</string>
-    <string name="humidity_graph_entries">Humidity Entries</string>
-    <string name="hygrometer_graph_entries">Hygrometer Entries</string>
-    <string name="luminosity_graph_entries">Luminosity Entries</string>
+	<!-- Menu Strings item -->
+	<string name="menu_temperature">Temperature</string>
+	<string name="menu_air_humidity">Air Humidity</string>
+	<string name="menu_soil_humidity">Soil Humidity</string>
+	<string name="menu_luminosity">Luminosity</string>
+	<string name="temperature_graph_entries">Temperature Entries</string>
+	<string name="air_humidity_graph_entries">Air Humidity Entries</string>
+	<string name="soil_humidity_graph_entries">Soil Humidity Entries</string>
+	<string name="luminosity_graph_entries">Luminosity Entries</string>
+	<string name="act_main_btn_sign_up">Sign up</string>
+
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

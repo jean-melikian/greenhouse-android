@@ -8,55 +8,55 @@ import android.annotation.TargetApi;
 
 public class ServiceException extends Exception {
 
-    private int mCode;
-    private ServiceExceptionType mType;
+	private int mCode;
+	private ServiceExceptionType mType;
 
-    public ServiceException(int mCode) {
-        super();
-        setCode(mCode);
-    }
+	public ServiceException(int mCode) {
+		super();
+		setCode(mCode);
+	}
 
-    public ServiceException(ServiceExceptionType mType) {
-        super();
-        setType(mType);
-    }
+	public ServiceException(ServiceExceptionType mType) {
+		super();
+		setType(mType);
+	}
 
-    public ServiceException(String message, ServiceExceptionType mType) {
-        super(message);
-        setType(mType);
-    }
+	public ServiceException(String message, ServiceExceptionType mType) {
+		super(message);
+		setType(mType);
+	}
 
-    public ServiceException(String message, Throwable cause, ServiceExceptionType mType) {
-        super(message, cause);
-        setType(mType);
-    }
+	public ServiceException(String message, Throwable cause, ServiceExceptionType mType) {
+		super(message, cause);
+		setType(mType);
+	}
 
-    public ServiceException(Throwable cause, ServiceExceptionType mType) {
-        super(cause);
-        setType(mType);
-    }
+	public ServiceException(Throwable cause, ServiceExceptionType mType) {
+		super(cause);
+		setType(mType);
+	}
 
 
-    public ServiceException(String message, int mCode) {
-        super(message);
-        setCode(mCode);
-    }
+	public ServiceException(String message, int mCode) {
+		super(message);
+		setCode(mCode);
+	}
 
-    public ServiceException(String message, Throwable cause, int mCode) {
-        super(message, cause);
-        setCode(mCode);
-    }
+	public ServiceException(String message, Throwable cause, int mCode) {
+		super(message, cause);
+		setCode(mCode);
+	}
 
-    public ServiceException(Throwable cause, int mCode) {
-        super(cause);
-        setCode(mCode);
-    }
+	public ServiceException(Throwable cause, int mCode) {
+		super(cause);
+		setCode(mCode);
+	}
 
-    @TargetApi(24)
-    public ServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, int mCode) {
-        super(message, cause, enableSuppression, writableStackTrace);
-        setCode(mCode);
-    }
+	@TargetApi(24)
+	public ServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, int mCode) {
+		super(message, cause, enableSuppression, writableStackTrace);
+		setCode(mCode);
+	}
 
 	public static ServiceExceptionType getTypeForCode(int code) {
 		switch (code) {
@@ -83,30 +83,30 @@ public class ServiceException extends Exception {
 		}
 	}
 
-    public int getCode() {
-        return mCode;
-    }
+	public int getCode() {
+		return mCode;
+	}
 
-    public void setCode(int code) {
-        this.mCode = code;
-        setType(getTypeForCode(code));
-    }
+	public void setCode(int code) {
+		this.mCode = code;
+		setType(getTypeForCode(code));
+	}
 
-    public ServiceExceptionType getType() {
-        return mType;
-    }
+	public ServiceExceptionType getType() {
+		return mType;
+	}
 
-    public void setType(ServiceExceptionType type) {
-        this.mType = type;
-    }
+	public void setType(ServiceExceptionType type) {
+		this.mType = type;
+	}
 
-    @Override
-    public String getMessage() {
-        return "ServiceException with code : " + mCode + " and type " + mType + " " + getOriginalMessage();
-    }
+	@Override
+	public String getMessage() {
+		return "ServiceException with code : " + mCode + " and type " + mType + " " + getOriginalMessage();
+	}
 
-    public String getOriginalMessage() {
-        return super.getMessage();
-    }
+	public String getOriginalMessage() {
+		return super.getMessage();
+	}
 }
 

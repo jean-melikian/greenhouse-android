@@ -3,11 +3,13 @@ package com.android.greenhouse.greenhouseapp.model.valueformatters;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.text.DecimalFormat;
+
 /**
- * Created by antoinepelletier on 06/07/2017.
+ * Created by antoinepelletier on 10/07/2017.
  */
 
-public class TemperatureValueFormatter implements IAxisValueFormatter {
+public class SoilHumidityValueFormatter implements IAxisValueFormatter {
 	/**
 	 * Called when a value from an axis is to be formatted
 	 * before being drawn. For performance reasons, avoid excessive calculations
@@ -19,6 +21,6 @@ public class TemperatureValueFormatter implements IAxisValueFormatter {
 	 */
 	@Override
 	public String getFormattedValue(float value, AxisBase axis) {
-		return String.valueOf(value) + "°C";
+		return new DecimalFormat("##.##").format(value) + "%";
 	}
 }
