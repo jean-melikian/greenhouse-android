@@ -1,6 +1,6 @@
-# greenhouse-android
+# [Greenhouse Project](https://github.com/ozonePowered/greenhouse)
 
-## [Get to the main project repository](https://github.com/ozonePowered/greenhouse)
+# greenhouse-android
 
 L'application utilise le service FCM de Google pour recevoir des notifications provenant de notre webservice.
 
