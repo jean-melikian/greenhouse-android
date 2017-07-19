@@ -1,5 +1,7 @@
 # greenhouse-android
 
+## [Get to the main project repository](https://github.com/ozonePowered/greenhouse)
+
 L'application utilise le service FCM de Google pour recevoir des notifications provenant de notre webservice.
 
 Pour pouvoir compiler le projet, vous aurez besoin du fichier __`google-services.json`__ que nous pouvons vous fournir par email.
