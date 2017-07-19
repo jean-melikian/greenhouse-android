@@ -10,3 +10,4 @@ Nous avons mis en place deux flavors pour l'application:
 - dev: pointe sur l'API de développement
 - prod: pointe sur l'API de production
 
+Librairie employée pour les graphiques: [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
